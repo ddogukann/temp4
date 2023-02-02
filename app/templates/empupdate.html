@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+    
+    {% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3>Çalışan Düzenle</h3>
+            <hr>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy}}
+                {{form1|crispy}}
+                {{form2|crispy}}
+                
+                
+                <br>
+                <button type="submit" class=" btn btn-danger">Düzenle</button>
+              
+              
+            </form>
+            <br>
+           
+            
+        </div>
+      </div>
+    
+
+    {% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load has_group %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h1>{{ employee.calisan_adi }} {{ employee.calisan_soyadi }}</h1>
+<h1>TC : {{ employee.calisan_tc  }}</h1>
+{% if request.user|has_group:"calisan" %}
+{% else %}
+<a class="btn btn-primary" href="{% url 'user:updateemp' employee.id  %}" role="button">Çalışan Düzenle</a>
+<a class="btn btn-primary" href="{% url 'user:addmaas' employee.id  %}" role="button">Maaş Tablosu Ekle</a>
+{% endif %}
+<br>
+<br>
+<style>
+  .dropdown-menu {
+    width: 100%;
+    }
+  .dropdown {
+      width: 100%;
+      }
+</style>
+
+
+<div class="list-group">
+    {% for maas in maass %}
+    
+    <a href="{% url 'user:maasdetail' id=employee.id year=maas.yil  %}" class="list-group-item list-group-item-action">{{maas.yil}} Yılına Ait Bordro Tablosu </a>
+    
+    {% if request.user|has_group:"calisan" %}
+    {% else %}
+    <br>
+
+    <div class="row">
+      <div class="col">
+        <a class="btn btn-primary btn-block" href="{% url 'user:maasupdate' id=employee.id maasid=maas.id  %}" role="button">Düzenle</a>
+      </div>
+      <div class="col">
+         <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Aya Göre Düzenle
+    </button>
+    <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+      {% for ay in aylar1 %}
+      <a class="dropdown-item" href="{% url 'user:updatebymonth' id=employee.id maasid=maas.id month=ay %}" > {{ay}} </a>
+      {% endfor %}
+      
+         
+    </div>
+    
+      </div>
+      
+    </div>
+
+
+    
+   
+ 
+  </div>
+ 
+  {% endif %}
+  <br>
+
+<a class="btn btn-warning btn-block" href="{% url 'user:pdf' id=maas.id  %}" role="button">PDF Oluştur</a>
+
+    {% endfor %}
+    
+
+  
+   
+  </div>
+
+
+
+{% endblock %}

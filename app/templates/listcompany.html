@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+    
+    {% block content %}
+
+    <div class="col-md-6 mx-auto">
+
+    
+    <form action="{% url 'user:searchc' %}" method="get">
+        <input name="q" type="text" placeholder="Şirket Adı">
+      </form>
+<div class="list-group">
+    {% for company in companys %}
+    <a href="{% url 'user:subelist' id=company.id  %}" class="list-group-item text-center list-group-item-action">{{company.sirket_adi}}</a>
+  
+    {% endfor %}
+  </div>
+
+  </div>
+
+  {% endblock %}

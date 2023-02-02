@@ -1,0 +1,811 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<a class="btn btn-primary {% if uyelik%} {% else %}disabled{% endif %}" href="{% url 'user:updatesube' sube %}"
+  role="button">Şube Düzenle</a>
+<a class="btn btn-primary {% if uyelik%} {% else %}disabled{% endif %} {% if uyelik1 %} {% else %}disabled{% endif %}"
+  href="{% url 'user:calisanregister' sube %}" role="button">Çalışan Ekle</a>
+<br>
+<p>Pakete Tanımlı Kullanıcı Sayısı : {{calisansayi}} / {{maxuser}}<p>
+
+
+    <form action="{% url 'user:search' sube  %}" method="get">
+      <input name="q" type="text" placeholder="Çalışan Ad-Soyad-Tc">
+    </form>
+    <br>
+
+    <style>
+      .accordion {
+        --bs-accordion-border-width: 0px;
+      }
+    </style>
+
+
+    <div class="accordion" id="accordionExample">
+      {% for employee in employees %}
+      <script>
+        $(function () {
+
+          $('#datepicker{{forloop.counter}}').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+
+          });
+          $('#datepicker{{forloop.counter}}').data({
+            date: '{{employee.calisan_dogum_tarihi|date:"Y-m-d"}}'
+          });
+          $('#datepicker{{forloop.counter}}').datepicker('update');
+          $('#datepicker{{forloop.counter}}').datepicker().children('input').val(
+            '{{employee.calisan_dogum_tarihi|date:"Y-m-d"}}');
+
+          $('#datepicker1{{forloop.counter}}').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+
+          });
+          $('#datepicker1{{forloop.counter}}').data({
+            date: '{{employee.calisan_ise_giris_tarihi|date:"Y-m-d"}}'
+          });
+          $('#datepicker1{{forloop.counter}}').datepicker('update');
+          $('#datepicker1{{forloop.counter}}').datepicker().children('input').val(
+            '{{employee.calisan_ise_giris_tarihi|date:"Y-m-d"}}');
+
+        });
+      </script>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{forloop.counter}}">
+          <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse{{forloop.counter}}" aria-expanded="true"
+            aria-controls="collapse{{forloop.counter}}">
+            {% if employee.calisan_photo %}
+            <img src="{{employee.calisan_photo.url}}" alt="..." class="rounded-circle"
+              style="width: 100px; height: 100px;">
+            {% else %}
+            {% endif %}
+            <span style="color:red">{{employee.calisan_adi}} </span><span> &nbsp;</span><span style="color:red">
+              {{employee.calisan_soyadi}}</span>
+          </button>
+        </h2>
+        <div id="collapse{{forloop.counter}}"
+          class="accordion-collapse collapse {% if forloop.counter > 0 %}{% else %} show  {% endif %}"
+          aria-labelledby="heading{{forloop.counter}}" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                  data-bs-target="#tab1{{forloop.counter}}" type="button" role="tab"
+                  aria-controls="tab1{{forloop.counter}}" aria-selected="true">Personel
+                  Bilgisi</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#tab2{{forloop.counter}}"
+                  type="button" role="tab" aria-controls="tab2{{forloop.counter}}" aria-selected="false">Maaş</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#tab3{{forloop.counter}}"
+                  type="button" role="tab" aria-controls="tab3{{forloop.counter}}" aria-selected="false">Detaylı
+                  İşlemler</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#tab4{{forloop.counter}}"
+                  type="button" role="tab" aria-controls="tab4{{forloop.counter}}" aria-selected="false">Bordro</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#tab5{{forloop.counter}}"
+                  type="button" role="tab" aria-controls="tab5{{forloop.counter}}"
+                  aria-selected="false">Pdf/Excel</button>
+              </li>
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="tab1{{forloop.counter}}" role="tabpanel"
+                aria-labelledby="tab1{{forloop.counter}}" tabindex="0">
+
+                <form method="post">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <div class="row g-3">
+                      <div class="col">
+                        <label for="exampleInputname{{ forloop.counter }}">İsim</label>
+                        <input type="text" class="form-control" id="exampleInputname{{ forloop.counter }}"
+                          name="input1{{forloop.counter}}" placeholder="{{employee.calisan_adi}}" {% if uyelik%}
+                          {% else %}disabled{% endif %}>
+                      </div>
+                      <div class="col">
+                        <label for="exampleInputname{{ forloop.counter }}">Soy İsim</label>
+                        <input type="text" class="form-control" id="exampleInputname{{ forloop.counter }}"
+                          name="input2{{forloop.counter}}" placeholder="{{employee.calisan_soyadi}}" {% if uyelik%}
+                          {% else %}disabled{% endif %}>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="exampleInputtc{{ forloop.counter }}">Tc</label>
+                        <input type="text" class="form-control" id="exampleInputtc{{ forloop.counter }}"
+                          name="input3{{forloop.counter}}" placeholder="{{employee.calisan_tc}}" {% if uyelik%}
+                          {% else %}disabled{% endif %}>
+                      </div>
+                      <div class="col">
+                        <label for="exampleInputmail{{ forloop.counter }}">Mail</label>
+                        <input type="text" class="form-control" id="exampleInputmail{{ forloop.counter }}"
+                          name="input4{{forloop.counter}}" placeholder="{{employee.calisan_mail}}" {% if uyelik%}
+                          {% else %}disabled{% endif %}>
+                      </div>
+                      <div class="col">
+                        <label for="exampleInputmail{{ forloop.counter }}">Telefon</label>
+                        <input type="text" class="form-control" id="exampleInputtelefon{{ forloop.counter }}"
+                          name="input5{{forloop.counter}}" placeholder="{{employee.calisan_telefon}}" {% if uyelik%}
+                          {% else %}disabled{% endif %}>
+                      </div>
+                    </div>
+                    <div class="row g-3">
+                      <div class="col">
+                        <label for="exampleInputmail{{ forloop.counter }}">Adres</label>
+                        <input type="text" class="form-control" id="exampleInputadres{{ forloop.counter }}"
+                          name="input6{{forloop.counter}}" placeholder="{{employee.calisan_adres}}" {% if uyelik%}
+                          {% else %}disabled{% endif %}>
+                      </div>
+
+                    </div>
+                    <div class="row g-3">
+                      <div class="col">
+                        <div class="row form-group">
+                          <label for="date" class="col col-form-label">Doğum Tarihi</label>
+
+                          <div class="input-group date" id="datepicker{{forloop.counter}}">
+                            <input type="text" class="form-control" name="input7{{forloop.counter}}">
+                            <span class="input-group-append">
+                              <span class="input-group-text bg-white d-block">
+                                <i class="fa fa-calendar"></i>
+                              </span>
+                            </span>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <label for="date" class="col- col-form-label">İşe Giriş Tarihi</label>
+
+                        <div class="input-group date" id="datepicker1{{forloop.counter}}">
+                          <input type="text" class="form-control " name="input8{{forloop.counter}}">
+                          <span class="input-group-append">
+                            <span class="input-group-text bg-white d-block">
+                              <i class="fa fa-calendar"></i>
+                            </span>
+                          </span>
+
+                        </div>
+                      </div>
+
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <label class="col- col-form-label">Engelli Durumu</label>
+                        <select name="calisanengel{{forloop.counter}}" class="form-select"
+                          aria-label="Default select example" {% if uyelik%} {% else %}disabled{% endif %}>
+                          <option value="pick0" {% if employee.calisan_engelli == 'pick0' %}selected {% endif %}>Engelli
+                            Değil</option>
+                          <option value="pick1" {% if employee.calisan_engelli == 'pick1' %}selected {% endif %}>1.
+                            Derece Engelli</option>
+                          <option value="pick2" {% if employee.calisan_engelli == 'pick2' %}selected {% endif %}>2.
+                            Derece Engelli</option>
+                          <option value="pick3" {% if employee.calisan_engelli == 'pick3' %}selected {% endif %}>3.
+                            Derece Engelli</option>
+
+                          Personeli</option>
+
+                        </select>
+                      </div>
+                      <div class="col">
+                        <label class="col- col-form-label">Emeklilik Durumu</label>
+                        <select name="calisanemekli{{forloop.counter}}" class="form-select"
+                          aria-label="Default select example" {% if uyelik%} {% else %}disabled{% endif %}>
+                          <option value="False" {% if employee.calisan_emekli  %} {% else %} selected {% endif %}>Emekli
+                            Değil</option>
+                          <option value="True" {% if employee.calisan_emekli  %} selected {% endif %}>Emekli</option>
+
+
+                          Personeli</option>
+
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br>
+                  <button type="submit" name="infobutton"
+                    class="btn btn-warning float-right {% if uyelik%} {% else %}disabled{% endif %}"
+                    onclick="return confirm('Çalışan Bilgisi Güncellenecek Onaylıyor Musunuz?');">Güncelle</button>
+                  <br>
+
+                </form>
+              </div>
+
+              <div class="tab-pane fade" id="tab2{{forloop.counter}}" role="tabpanel"
+                aria-labelledby="tab2{{forloop.counter}}" tabindex="0">
+                {% for salary  in deneme %}
+                {% for d in salary %}
+                {% if employee.id == d.calisan_id_id %}
+
+
+                <p> Personelin Güncel Maaşı : {{d.ucret}} </p> <br>
+
+                <form method="post">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col-8 ">
+                      <label >Çalışan Kanun Numarası</label>
+                      <select name="calisantesvik{{forloop.parentloop.counter}}" class="form-select"
+                        aria-label="Default select example" {% if uyelik%} {% else %}disabled{% endif %}>
+                        <option value="pick1" {% if employee.calisan_tesvik == 'pick1' %}selected {% endif %}>Standart
+                          Çalışan
+                        </option>
+                        <option value="pick2" {% if employee.calisan_tesvik == 'pick2' %}selected {% endif %}>Teknokent
+                          Personeli (4691)</option>
+                        <option value="pick3" {% if employee.calisan_tesvik == 'pick3' %}selected {% endif %}>AR-GE
+                          Personeli
+                          (5746)</option>
+                        <option value="pick4" {% if employee.calisan_tesvik == 'pick4' %}selected {% endif %}>6111
+                          Sayılı
+                          Kanun</option>
+                        <option value="pick5" {% if employee.calisan_tesvik == 'pick5' %}selected {% endif %}>27103
+                          Sayılı
+                          Kanun</option>
+                        <option value="pick6" {% if employee.calisan_tesvik == 'pick6' %}selected {% endif %}>17103
+                          Sayılı
+                          Kanun</option>
+                        <option value="pick7" {% if employee.calisan_tesvik == 'pick7' %}selected {% endif %}>İşveren
+                        </option>
+                        <option value="pick8" {% if employee.calisan_tesvik == 'pick8' %}selected {% endif %}>İşveren
+                          Teknokent Personeli</option>
+                        <option value="pick9" {% if employee.calisan_tesvik == 'pick9' %}selected {% endif %}>İşveren
+                          AR-GE
+                          Personeli</option>
+
+                      </select>
+                    </div>
+                    <div class="col-4 ">
+                      <label >Ücret Tipi</label>
+                      <select name="ucrettipi{{forloop.parentloop.counter}}" class="form-select"
+                        aria-label="Default select example" {% if uyelik%} {% else %}disabled{% endif %}>
+                        <option value="pick0" {% if d.ucrettipi == 'pick0' %}selected {% endif %}>Brüt
+                        </option>
+                        <option value="pick1" {% if d.ucrettipi == 'pick1' %}selected {% endif %}>Net</option>
+                      </select>
+                    </div>
+                  </div>
+                  <br>
+
+                  <select name="aylar" class="form-select" aria-label="Default select example" {% if uyelik%}
+                    {% else %}disabled{% endif %}>
+                    <option value="ocak" {% if month == '1' %}selected {% endif %}>Ocak</option>
+                    <option value="subat" {% if month == '2' %}selected {% endif %}>Şubat</option>
+                    <option value="mart" {% if month == '3' %}selected {% endif %}>Mart</option>
+                    <option value="nisan" {% if month == '4' %}selected {% endif %}>Nisan</option>
+                    <option value="mayis" {% if month == '5' %}selected {% endif %}>Mayıs</option>
+                    <option value="haziran" {% if month == '6' %}selected {% endif %}>Haziran</option>
+                    <option value="temmuz" {% if month == '7' %}selected {% endif %}>Temmuz</option>
+                    <option value="agustos" {% if month == '8' %}selected {% endif %}>Ağustos</option>
+                    <option value="eylul" {% if month == '9' %}selected {% endif %}>Eylül</option>
+                    <option value="ekim" {% if month == '10' %}selected {% endif %}>Ekim</option>
+                    <option value="kasim" {% if month == '11' %}selected {% endif %}>Kasım</option>
+                    <option value="aralik" {% if month == '12' %}selected {% endif %}>Aralık</option>
+                  </select>
+                  <div class="row">
+                    <div class="col-10 ">
+                  <label for="exampleInputmail{{forloop.parentloop.counter}}">Maaş Tutar</label>
+                  <input type="text" class="form-control" id="exampleInputmail{{forloop.parentloop.counter}}"
+                    name="maas{{forloop.parentloop.counter}}" placeholder="Maaş Tutarı" {% if uyelik%}
+                    {% else %}disabled{% endif %} value={{d.ucret}}>
+                  </div>
+                  <div class="col-2 ">
+                    <label >Para Birimi</label>
+                    <select name="parabirimi{{forloop.parentloop.counter}}" class="form-select" aria-label="Default select example" {% if uyelik%}
+                    {% else %}disabled{% endif %}>
+                    <option value="pick0" {% if d.para_birimi == 'pick0' %}selected {% endif %}>TL</option>
+                    <option value="pick1" {% if d.para_birimi == 'pick1' %}selected {% endif %}>USD</option>
+                    <option value="pick2" {% if d.para_birimi == 'pick2' %}selected {% endif %}>EURO</option>
+                    
+                  </select>
+                </div>
+              </div>
+                  <label for="exampleInputmail1{{ forloop.counter }}">Gün Sayısı</label>
+                  <input type="number" class="form-control" id="exampleInputmail1{{forloop.parentloop.counter}}"
+                    name="maas1{{forloop.parentloop.counter}}" placeholder="Gün Sayısı" {% if uyelik%}
+                    {% else %}disabled{% endif %} min="0" max="30" value=30  >
+                  <script>
+                    const input {
+                      {
+                        forloop.parentloop.counter
+                      }
+                    } = document.querySelector('input[name="maas1{{forloop.parentloop.counter}}"]');
+                    input {
+                      {
+                        forloop.parentloop.counter
+                      }
+                    }.addEventListener('invalid', function (event) {
+                      if (event.target.value < 0 || event.target.value > 30) {
+                        event.target.setCustomValidity('0 ile 30 Gün Arasında Bir Değer Giriniz');
+                      }
+                    })
+
+                    input {
+                      {
+                        forloop.parentloop.counter
+                      }
+                    }.addEventListener('change', function (event) {
+                      event.target.setCustomValidity('');
+                    })
+                  </script>
+
+                  <label for="exampleInputmail2{{forloop.parentloop.counter}}">Arge Gün</label>
+                  <input type="number" class="form-control" id="exampleInputmail2{{forloop.parentloop.counter}}"
+                    name="maas2{{forloop.parentloop.counter}}" placeholder="Arge Gün" {% if uyelik%}
+                    {% else %}disabled{% endif %} min="0" max="30" value=0>
+                  <script>
+                    const arge {
+                      {
+                        forloop.parentloop.counter
+                      }
+                    } = document.querySelector('input[name="maas2{{forloop.parentloop.counter}}"]');
+
+
+                    arge {
+                      {
+                        forloop.parentloop.counter
+                      }
+                    }.addEventListener('invalid', function (event) {
+                      if (event.target.value < 0 || event.target.value > 30 || event.target.value > document
+                        .getElementById("exampleInputmail1{{forloop.parentloop.counter}}").value) {
+                        if (event.target.value > document.getElementById(
+                            "exampleInputmail1{{forloop.parentloop.counter}}").value) {
+                          event.target.setCustomValidity('Gün Sayısından Büyük Değer Giremezsiniz');
+                        } else {
+                          event.target.setCustomValidity('0 ile 30 Gün Arasında Bir Değer Giriniz');
+                        }
+
+                      }
+                    })
+
+                    arge {
+                      {
+                        forloop.parentloop.counter
+                      }
+                    }.addEventListener('change', function (event) {
+                      event.target.setCustomValidity('');
+                    })
+                  </script>
+                  <br>
+                  <button type="submit" name="maasbuton"
+                    class="btn btn-warning float-right {% if uyelik%} {% else %}disabled{% endif %}"
+                    onclick="return confirm('Çalışan Bilgisi Güncellenecek Onaylıyor Musunuz?');">Güncelle</button>
+
+
+                </form>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+              </div>
+              <div class="tab-pane fade" id="tab3{{forloop.counter}}" role="tabpanel"
+                aria-labelledby="tab3{{forloop.counter}}" tabindex="0">
+                <a href="{% url 'user:employeedetail' employee.id  %}"
+                  class="list-group-item list-group-item-action">{{employee.calisan_adi}} {{employee.calisan_soyadi}}
+                  {{employee.id}}</a>
+              </div>
+              <div class="tab-pane fade" id="tab4{{forloop.counter}}" role="tabpanel"
+                aria-labelledby="tab4{{forloop.counter}}" tabindex="0">
+                {% for salary  in bordro %}
+                {% for d in salary %}
+                {% if employee.id == d.calisan_id_id %}
+                <style>
+                  table {
+                    border-collapse: collapse;
+                    width: 100%;
+                  }
+
+                  th,
+                  td {
+                    border: 1px solid DodgerBlue;
+                    padding: 3px;
+                  }
+                </style>
+                <br>
+                <table>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Ay</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Brüt</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Gün</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Arge</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Çalışan SGK</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Çalışan İşsizlik</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Vergi Dilimi</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Gelir Vergisi</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Damga Vergisi</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Asgari İstisna</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Net Ücret</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Sgk Payı</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">İşsizlik Payı</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Sgk İstisnası</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Gelir İstisnası</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Damga İstisnası</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Toplam SGK</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Damga Ödemesi</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Gelir Ödemesi</p>
+                    </th>
+                    <th>
+                      <p style="font-size: 12px">Toplam Maliyet</p>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Ocak</p>
+                    </th>
+                    <td>{{d.ocak_brut}}</td>
+                    <td>{{d.ocak_calisilan_gun}}</td>
+                    <td>{{d.ocak_arge_gun}}</td>
+                    <td>{{d.ocak_sgk_kesintisi}}</td>
+                    <td>{{d.ocak_issizlik_kesintisi}}</td>
+                    <td>{{d.ocak_vergi_dilimi}}</td>
+                    <td>{{d.ocak_istisna_oncesi_gelir}}</td>
+                    <td>{{d.ocak_istisna_oncesi_damga}}</td>
+                    <td>{{d.ocak_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.ocak_net_ucret}}</td>
+                    <td>{{d.ocak_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.ocak_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.ocak_sgk_istisnasi}}</td>
+                    <td>{{d.ocak_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.ocak_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.ocak_odenecek_sgk}}</td>
+                    <td>{{d.ocak_odenecek_damga_vergisi}}</td>
+                    <td>{{d.ocak_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.ocak_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Şubat</p>
+                    </th>
+                    <td>{{d.subat_brut}}</td>
+                    <td>{{d.subat_calisilan_gun}}</td>
+                    <td>{{d.subat_arge_gun}}</td>
+                    <td>{{d.subat_sgk_kesintisi}}</td>
+                    <td>{{d.subat_issizlik_kesintisi}}</td>
+                    <td>{{d.subat_vergi_dilimi}}</td>
+                    <td>{{d.subat_istisna_oncesi_gelir}}</td>
+                    <td>{{d.subat_istisna_oncesi_damga}}</td>
+                    <td>{{d.subat_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.subat_net_ucret}}</td>
+                    <td>{{d.subat_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.subat_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.subat_sgk_istisnasi}}</td>
+                    <td>{{d.subat_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.subat_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.subat_odenecek_sgk}}</td>
+                    <td>{{d.subat_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.subat_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.subat_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Mart</p>
+                    </th>
+                    <td>{{d.mart_brut}}</td>
+                    <td>{{d.mart_calisilan_gun}}</td>
+                    <td>{{d.mart_arge_gun}}</td>
+                    <td>{{d.mart_sgk_kesintisi}}</td>
+                    <td>{{d.mart_issizlik_kesintisi}}</td>
+                    <td>{{d.mart_vergi_dilimi}}</td>
+                    <td>{{d.mart_istisna_oncesi_gelir}}</td>
+                    <td>{{d.mart_istisna_oncesi_damga}}</td>
+                    <td>{{d.mart_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.mart_net_ucret}}</td>
+                    <td>{{d.mart_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.mart_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.mart_sgk_istisnasi}}</td>
+                    <td>{{d.mart_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.mart_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.mart_odenecek_sgk}}</td>
+                    <td>{{d.mart_odenecek_damga_vergisi}}</td>
+                    <td>{{d.mart_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.mart_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Nisan</p>
+                    </th>
+                    <td>{{d.nisan_brut}}</td>
+                    <td>{{d.nisan_calisilan_gun}}</td>
+                    <td>{{d.nisan_arge_gun}}</td>
+                    <td>{{d.nisan_sgk_kesintisi}}</td>
+                    <td>{{d.nisan_issizlik_kesintisi}}</td>
+                    <td>{{d.nisan_vergi_dilimi}}</td>
+                    <td>{{d.nisan_istisna_oncesi_gelir}}</td>
+                    <td>{{d.nisan_istisna_oncesi_damga}}</td>
+                    <td>{{d.nisan_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.nisan_net_ucret}}</td>
+                    <td>{{d.nisan_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.nisan_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.nisan_sgk_istisnasi}}</td>
+                    <td>{{d.nisan_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.nisan_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.nisan_odenecek_sgk}}</td>
+                    <td>{{d.nisan_odenecek_damga_vergisi}}</td>
+                    <td>{{d.nisan_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.nisan_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Mayıs</p>
+                    </th>
+                    <td>{{d.mayis_brut}}</td>
+                    <td>{{d.mayis_calisilan_gun}}</td>
+                    <td>{{d.mayis_arge_gun}}</td>
+                    <td>{{d.mayis_sgk_kesintisi}}</td>
+                    <td>{{d.mayis_issizlik_kesintisi}}</td>
+                    <td>{{d.mayis_vergi_dilimi}}</td>
+                    <td>{{d.mayis_istisna_oncesi_gelir}}</td>
+                    <td>{{d.mayis_istisna_oncesi_damga}}</td>
+                    <td>{{d.mayis_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.mayis_net_ucret}}</td>
+                    <td>{{d.mayis_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.mayis_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.mayis_sgk_istisnasi}}</td>
+                    <td>{{d.mayis_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.mayis_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.mayis_odenecek_sgk}}</td>
+                    <td>{{d.mayis_odenecek_damga_vergisi}}</td>
+                    <td>{{d.mayis_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.mayis_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Haziran</p>
+                    </th>
+                    <td>{{d.haziran_brut}}</td>
+                    <td>{{d.haziran_calisilan_gun}}</td>
+                    <td>{{d.haziran_arge_gun}}</td>
+                    <td>{{d.haziran_sgk_kesintisi}}</td>
+                    <td>{{d.haziran_issizlik_kesintisi}}</td>
+                    <td>{{d.haziran_vergi_dilimi}}</td>
+                    <td>{{d.haziran_istisna_oncesi_gelir}}</td>
+                    <td>{{d.haziran_istisna_oncesi_damga}}</td>
+                    <td>{{d.haziran_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.haziran_net_ucret}}</td>
+                    <td>{{d.haziran_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.haziran_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.haziran_sgk_istisnasi}}</td>
+                    <td>{{d.haziran_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.haziran_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.haziran_odenecek_sgk}}</td>
+                    <td>{{d.haziran_odenecek_damga_vergisi}}</td>
+                    <td>{{d.haziran_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.haziran_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Temmuz</p>
+                    </th>
+                    <td>{{d.temmuz_brut}}</td>
+                    <td>{{d.temmuz_calisilan_gun}}</td>
+                    <td>{{d.temmuz_arge_gun}}</td>
+                    <td>{{d.temmuz_sgk_kesintisi}}</td>
+                    <td>{{d.temmuz_issizlik_kesintisi}}</td>
+                    <td>{{d.temmuz_vergi_dilimi}}</td>
+                    <td>{{d.temmuz_istisna_oncesi_gelir}}</td>
+                    <td>{{d.temmuz_istisna_oncesi_damga}}</td>
+                    <td>{{d.temmuz_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.temmuz_net_ucret}}</td>
+                    <td>{{d.temmuz_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.temmuz_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.temmuz_sgk_istisnasi}}</td>
+                    <td>{{d.temmuz_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.temmuz_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.temmuz_odenecek_sgk}}</td>
+                    <td>{{d.temmuz_odenecek_damga_vergisi}}</td>
+                    <td>{{d.temmuz_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.temmuz_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Ağustos</p>
+                    </th>
+                    <td>{{d.agustos_brut}}</td>
+                    <td>{{d.agustos_calisilan_gun}}</td>
+                    <td>{{d.agustos_arge_gun}}</td>
+                    <td>{{d.agustos_sgk_kesintisi}}</td>
+                    <td>{{d.agustos_issizlik_kesintisi}}</td>
+                    <td>{{d.agustos_vergi_dilimi}}</td>
+                    <td>{{d.agustos_istisna_oncesi_gelir}}</td>
+                    <td>{{d.agustos_istisna_oncesi_damga}}</td>
+                    <td>{{d.agustos_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.agustos_net_ucret}}</td>
+                    <td>{{d.agustos_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.agustos_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.agustos_sgk_istisnasi}}</td>
+                    <td>{{d.agustos_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.agustos_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.agustos_odenecek_sgk}}</td>
+                    <td>{{d.agustos_odenecek_damga_vergisi}}</td>
+                    <td>{{d.agustos_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.agustos_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Eylül</p>
+                    </th>
+                    <td>{{d.eylul_brut}}</td>
+                    <td>{{d.eylul_calisilan_gun}}</td>
+                    <td>{{d.eylul_arge_gun}}</td>
+                    <td>{{d.eylul_sgk_kesintisi}}</td>
+                    <td>{{d.eylul_issizlik_kesintisi}}</td>
+                    <td>{{d.eylul_vergi_dilimi}}</td>
+                    <td>{{d.eylul_istisna_oncesi_gelir}}</td>
+                    <td>{{d.eylul_istisna_oncesi_damga}}</td>
+                    <td>{{d.eylul_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.eylul_net_ucret}}</td>
+                    <td>{{d.eylul_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.eylul_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.eylul_sgk_istisnasi}}</td>
+                    <td>{{d.eylul_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.eylul_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.eylul_odenecek_sgk}}</td>
+                    <td>{{d.eylul_odenecek_damga_vergisi}}</td>
+                    <td>{{d.eylul_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.eylul_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Ekim</p>
+                    </th>
+                    <td>{{d.ekim_brut}}</td>
+                    <td>{{d.ekim_calisilan_gun}}</td>
+                    <td>{{d.ekim_arge_gun}}</td>
+                    <td>{{d.ekim_sgk_kesintisi}}</td>
+                    <td>{{d.ekim_issizlik_kesintisi}}</td>
+                    <td>{{d.ekim_vergi_dilimi}}</td>
+                    <td>{{d.ekim_istisna_oncesi_gelir}}</td>
+                    <td>{{d.ekim_istisna_oncesi_damga}}</td>
+                    <td>{{d.ekim_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.ekim_net_ucret}}</td>
+                    <td>{{d.ekim_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.ekim_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.ekim_sgk_istisnasi}}</td>
+                    <td>{{d.ekim_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.ekim_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.ekim_odenecek_sgk}}</td>
+                    <td>{{d.ekim_odenecek_damga_vergisi}}</td>
+                    <td>{{d.ekim_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.ekim_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Kasım</p>
+                    </th>
+                    <td>{{d.kasim_brut}}</td>
+                    <td>{{d.kasim_calisilan_gun}}</td>
+                    <td>{{d.kasim_arge_gun}}</td>
+                    <td>{{d.kasim_sgk_kesintisi}}</td>
+                    <td>{{d.kasim_issizlik_kesintisi}}</td>
+                    <td>{{d.kasim_vergi_dilimi}}</td>
+                    <td>{{d.kasim_istisna_oncesi_gelir}}</td>
+                    <td>{{d.kasim_istisna_oncesi_damga}}</td>
+                    <td>{{d.kasim_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.kasim_net_ucret}}</td>
+                    <td>{{d.kasim_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.kasim_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.kasim_sgk_istisnasi}}</td>
+                    <td>{{d.kasim_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.kasim_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.kasim_odenecek_sgk}}</td>
+                    <td>{{d.kasim_odenecek_damga_vergisi}}</td>
+                    <td>{{d.kasim_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.kasim_toplam_maliyet}}</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p style="font-size: 12px">Aralık</p>
+                    </th>
+                    <td>{{d.aralik_brut}}</td>
+                    <td>{{d.aralik_calisilan_gun}}</td>
+                    <td>{{d.aralik_arge_gun}}</td>
+                    <td>{{d.aralik_sgk_kesintisi}}</td>
+                    <td>{{d.aralik_issizlik_kesintisi}}</td>
+                    <td>{{d.aralik_vergi_dilimi}}</td>
+                    <td>{{d.aralik_istisna_oncesi_gelir}}</td>
+                    <td>{{d.aralik_istisna_oncesi_damga}}</td>
+                    <td>{{d.aralik_asgari_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.aralik_net_ucret}}</td>
+                    <td>{{d.aralik_isveren_sgk_kesintisi}}</td>
+                    <td>{{d.aralik_isveren_issizlik_kesintisi}}</td>
+                    <td>{{d.aralik_sgk_istisnasi}}</td>
+                    <td>{{d.aralik_gelir_vergisi_istisnasi}}</td>
+                    <td>{{d.aralik_damga_vergisi_istisnasi}}</td>
+                    <td>{{d.aralik_odenecek_sgk}}</td>
+                    <td>{{d.aralik_odenecek_damga_vergisi}}</td>
+                    <td>{{d.aralik_odenecek_gelir_vergisi}}</td>
+                    <td>{{d.aralik_toplam_maliyet}}</td>
+                  </tr>
+
+                </table>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+
+
+
+              </div>
+              <div class="tab-pane fade" id="tab5{{forloop.counter}}" role="tabpanel"
+                aria-labelledby="tab5{{forloop.counter}}" tabindex="0">
+                <br>
+                <form method="post">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col">
+                      {{form.aylar|as_crispy_field}}
+                    </div>
+                    <div class="col">
+                      {{form.deneme|as_crispy_field}}
+                    </div>
+                    {{form.export|as_crispy_field}}
+
+                    <button name="pdf{{forloop.counter}}" type="submit" class=" btn btn-danger">PDF Oluştur</button>
+
+
+                  </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+
+
+
+
+
+
+      {% endblock %}

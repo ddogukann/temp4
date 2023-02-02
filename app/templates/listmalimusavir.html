@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+    
+    {% block content %}
+    
+    <a class="btn btn-primary" href="{% url 'user:addmalimusavir'  %}" role="button">Çalışan Ekle</a>
+  
+      <div class="accordion" id="accordionExample">
+        {% for employee in calisan %}
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading{{forloop.counter}}">
+            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapse{{forloop.counter}}">
+              {% if employee.mali_musavir_photo %}
+              <img src="{{employee.mali_musavir_photo.url}}" alt="..." class="rounded-circle" style="width: 100px; height: 100px;">
+              {% else %}
+              {% endif %}
+              <span style="color:red">{{employee.mali_musavir_adi}} </span><span> &nbsp;</span><span style="color:red"> {{employee.mali_musavir_soyadi}}</span> 
+            </button>
+          </h2>
+          <div id="collapse{{forloop.counter}}" class="accordion-collapse collapse {% if forloop.counter > 0 %}{% else %} show  {% endif %}" aria-labelledby="heading{{forloop.counter}}" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#tab1{{forloop.counter}}" type="button" role="tab" aria-controls="tab1{{forloop.counter}}" aria-selected="true">Personel Bilgisi</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#tab2{{forloop.counter}}" type="button" role="tab" aria-controls="tab2{{forloop.counter}}" aria-selected="false">Maaş</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#tab3{{forloop.counter}}" type="button" role="tab" aria-controls="tab3{{forloop.counter}}" aria-selected="false">Detaylı İşlemler</button>
+                </li>
+              
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab1{{forloop.counter}}" role="tabpanel" aria-labelledby="tab1{{forloop.counter}}" tabindex="0">
+    
+                  <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="exampleInputname{{ forloop.counter }}">İsim</label>
+                      <input type="text" class="form-control" id="exampleInputname{{ forloop.counter }}" name="input1{{forloop.counter}}"   placeholder="{{employee.mali_musavir_adi}}">
+                      <label for="exampleInputname{{ forloop.counter }}">Soy İsim</label>
+                      <input type="text" class="form-control" id="exampleInputname{{ forloop.counter }}" name="input2{{forloop.counter}}"  placeholder="{{employee.mali_musavir_soyadi}}">
+                      <label for="exampleInputtc{{ forloop.counter }}">Tc</label>
+                      <input type="text" class="form-control" id="exampleInputtc{{ forloop.counter }}" name="input3{{forloop.counter}}"  placeholder="{{employee.mali_musavir_tc}}">
+                      <label for="exampleInputmail{{ forloop.counter }}">Mail</label>
+                      <input type="text" class="form-control" id="exampleInputmail{{ forloop.counter }}" name="input4{{forloop.counter}}"  placeholder="{{employee.mali_musavir_mail}}">
+                    </div>
+                    <button type="submit" name="infobutton" class="btn btn-warning float-right" onclick="return confirm('Çalışan Bilgisi Güncellenecek Onaylıyor Musunuz?');">Güncelle</button>
+                    <br>
+                  </form>
+                </div>
+                <div class="tab-pane fade" id="tab2{{forloop.counter}}" role="tabpanel" aria-labelledby="tab2{{forloop.counter}}" tabindex="0">
+              
+                    
+    
+                </form>
+                </div>
+                <div class="tab-pane fade" id="tab3{{forloop.counter}}" role="tabpanel" aria-labelledby="tab3{{forloop.counter}}" tabindex="0">
+
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        
+      </div>
+
+
+  {% endblock %}

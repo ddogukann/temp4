@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load has_group %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col">
+{{form.aylar|as_crispy_field}}
+</div>
+<div class="col">
+  {{form.deneme|as_crispy_field}}
+  </div>
+  {{form.export|as_crispy_field}}
+
+<button type="submit" class=" btn btn-danger">PDF Oluştur</button>
+
+
+
+{% endblock %}

@@ -1,0 +1,599 @@
+{% load has_group %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bordro Tr-ik</title>
+    <link rel = "icon" href = 
+"https://cdn.discordapp.com/attachments/1029663687256051727/1061974268117786664/pngegg1.png" 
+        type = "image/x-icon">
+    <!-- CSS only -->
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> {% endcomment %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+<body>
+    
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/htmx.org@1.8.4" integrity="sha384-wg5Y/JwF7VxGk4zLsJEcAojRtlVp1FKKdGy1qN+OMtdq72WRvX/EdRdqg/LOhYeV" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+
+{% if request.user.is_authenticated %}
+<style>
+  html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: none;
+}
+</style>
+<style>
+  ul,
+  li {
+      padding: 0;
+      list-style-type: none;
+      margin: 0;
+  }
+
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
+  }
+
+  .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 78px;
+      height: 100%;
+      padding: 6px 14px;
+      background: #11101d;
+      transition: all 0.5s ease;
+      overflow-y: scroll;
+  }
+
+  .sidebar.active {
+      width: 240px;
+      
+  }
+
+  .sidebar .logo_content .logo {
+      display: flex;
+      color: #fff;
+      height: 50px;
+      width: 100%;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+  }
+
+  .sidebar.active .logo_content .logo {
+      opacity: 1;
+      pointer-events: all;
+
+  }
+
+  .logo_content .logo i {
+      font-size: 28px;
+      margin-right: 5px;
+  }
+
+  .logo_content .logo .logo_name {
+      font-size: 20px;
+      font-weight: 400;
+  }
+
+  .sidebar #btn {
+      position: absolute;
+      color: #fff;
+      left: 50%;
+      top: 6px;
+      font-size: 20px;
+      height: 50px;
+      width: 50px;
+      text-align: center;
+      line-height: 50px;
+      transform: translateX(-50%);
+  }
+
+  .sidebar.sidebar.active #btn {
+      left: 90%;
+  }
+
+  .sidebar ul {
+      margin-top: 20px;
+  }
+
+  .sidebar ul li {
+      position: relative;
+      height: 50px;
+      width: 100%;
+      list-style: none;
+      margin: 0 5px;
+      line-height: 50px;
+  }
+
+  .sidebar ul li a {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: all 0.4 ease;
+      border-radius: 12px;
+      white-space: nowrap;
+  }
+
+  .sidebar ul li a:hover {
+      background: #fff;
+      color: #11101d;
+
+  }
+
+  .sidebar ul li a i {
+      height: 50px;
+      min-width: 50px;
+      border-radius: 12px;
+      line-height: 50px;
+      text-align: center;
+  }
+
+  .sidebar .links_name {
+      opacity: 0;
+      pointer-events: none;
+  }
+
+  .sidebar.active .links_name {
+      opacity: 1;
+      pointer-events: auto;
+  }
+
+  .sidebar .profile_content {
+      position: absolute;
+      color: #fff;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+
+  }
+
+  .sidebar .profile_content .profile {
+      position: relative;
+      padding: 10px 6px;
+      height: 60px;
+      background: none;
+      transition: all 0.4s ease;
+  }
+
+  .sidebar.active .profile_content .profile {
+      background: #1d1b31;
+  }
+
+  .profile_content .profile .profile_details {
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      white-space: nowrap;
+  }
+
+  .sidebar.active .profile .profile_details {
+
+      opacity: 1;
+      pointer-events: auto;
+  }
+
+  .profile_content .profile .profile_details img {
+      height: 45px;
+      width: 45px;
+      object-fit: cover;
+      border-radius: 12px;
+  }
+
+  .profile_content .profile .profile_details .name_job {
+      margin-left: 10px;
+  }
+
+  .profile_content .profile .profile_details .name {
+      font-size: 14px;
+      font-weight: 500;
+  }
+
+  .profile_content .profile .profile_details .job {
+      font-size: 12px;
+
+  }
+
+  .profile #log_out {
+      position: absolute;
+      left: 50%;
+      bottom: 5px;
+      transform: translateX(-50%);
+      min-width: 50px;
+      line-height: 50px;
+      font-size: 20px;
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.4s ease;
+      background: #1d1b31;
+      
+  }
+
+  .sidebar.active .profile #log_out {
+      left: 88%;
+      background: none;
+  }
+
+  .home_content {
+      position: relative;
+      height: 100%;
+      width: calc(100%-78px);
+      left: 78px;
+      transition: all 0.5s ease;
+  }
+
+  .sidebar.active~.home_content {
+      width: calc(100%-240px);
+      left: 240px;
+  }
+
+  .sidebar ul li .tooltip {
+      position: absolute;
+      left: 122px;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 6px;
+      height: 35px;
+      width: 122px;
+      background: #fff;
+      line-height: 35px;
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      transition: 0s;
+      opacity: 0;
+      pointer-events: none;
+  }
+
+  .sidebar.active ul li .tooltip {
+      display: none;
+  }
+
+  .sidebar ul li:hover .tooltip {
+      transition: all 0.5s ease;
+      top: 50%;
+      opacity: 1;
+  
+  }
+
+</style>
+
+<div class="sidebar">
+  <div class="logo_content">
+      <div class="logo">
+        <i class='bx bx-trending-up bx-fade-up' ></i>
+          <div class="logo_name">BordroTr-ik</div>
+      </div>
+      <i class='bx bx-menu' id="btn"></i>
+  </div>
+  <ul class="nav_list">
+      <li style="text-decoration: none;">
+          <a href="{% url 'user:homepage'%}">
+            <i class='bx bx-home ' ></i>
+              <span class="links_name">Anasayfa</span>
+          </a>
+          <span class="tooltip">Anasayfa</span>
+      </li>
+
+     
+
+    
+    
+    {% if request.user|has_group:"admin" %}
+      <li style="text-decoration: none;">
+          <a href="{% url 'user:listcompany'%}">
+            <i class='bx bx-building' undefined ></i>
+              <span class="links_name">Şirketler</span>
+          </a>
+          <span class="tooltip">Şirketler</span>
+      </li>
+      {% endif %}
+      {% if request.user|has_group:"mali_musavir" %}
+        
+      <li style="text-decoration: none;">
+        <a href="{% url 'user:malisirketdetail'%}">
+          <i class='bx bx-building' undefined ></i>
+            <span class="links_name">Şirketim</span>
+        </a>
+        <span class="tooltip">Şirketim</span>
+    </li>
+    
+    {% endif %}
+    {% if request.user|has_group:"mali_musavir" %}
+    <li style="text-decoration: none;">
+      <a href="{% url 'user:listcompany'%}">
+        <i class='bx bx-building' undefined ></i>
+          <span class="links_name">Bağlı Şirketler</span>
+      </a>
+      <span class="tooltip">Bağlı Şirketler</span>
+  </li>
+  {% endif %}
+  {% if request.user|has_group:"mali_musavir" %}
+      <li style="text-decoration: none;">
+          <a href="">
+            <i class='bx bxs-user-account' ></i>
+              <span class="links_name">Çalışanlar</span>
+          </a>
+          <span class="tooltip">Çalışanlar</span>
+      </li>
+      {% endif %}
+      <li style="text-decoration: none;">
+        <a href="/hesapla">
+          <i class='bx bx-abacus'></i>
+            <span class="links_name">Hesaplama Aracı</span>
+        </a>
+        <span class="tooltip">Hesaplama Aracı</span>
+    </li>
+    
+          
+      
+        {% if request.user|has_group:"calisan" %}
+        <li style="text-decoration: none;">
+          <a href="{% url 'user:employeedetail' user1.id  %}">
+            <i class='bx bx-abacus'></i>
+              <span class="links_name">Bordro Görüntüle</span>
+          </a>
+          <span class="tooltip">Bordro Görüntüle</span>
+      </li>
+      
+      {% endif %}
+      <hr style="color:white">
+      {% if sirketedit %}
+      {% if request.user|has_group:"mali_musavir" %}
+      <li style="text-decoration: none;">
+          <a href="{% url 'user:companyregister'%}">
+            <i class='bx bx-plus-circle' ></i>
+              <span class="links_name">Şirket Ekle</span>
+          </a>
+          <span class="tooltip">Şirket Ekle</span>
+      </li>
+      {% endif %}
+      
+      {% if request.user|has_group:"admin" %}
+      <li style="text-decoration: none;">
+          <a href="{% url 'user:companyregister'%}">
+            <i class='bx bx-plus-circle' ></i>
+              <span class="links_name">Şirket Ekle</span>
+          </a>
+          <span class="tooltip">Şirket Ekle</span>
+      </li>
+      {% endif %}
+      {% endif %}
+      {% if subeedit %}
+      <li style="text-decoration: none;">
+          <a href="{% url 'user:updatecompany' company.id %}" {% if uyelik%} {% else %}disabled{% endif %}>
+            <i class='bx bxs-edit' ></i>
+              <span class="links_name">Şirket Düzenle</span>
+          </a>
+          <span class="tooltip">Şirket Düzenle</span>
+      </li>
+      <li style="text-decoration: none;">
+          <a  href="{% url 'user:addsube' company.id %}" {% if uyelik%} {% else %}disabled{% endif %}>
+            <i class='bx bx-plus-circle' ></i>
+              <span class="links_name">Şube Ekle</span>
+          </a>
+          <span class="tooltip">Şube Ekle</span>
+      </li>
+      <li style="text-decoration: none;">
+        <a href="{% url 'user:passiveemployee' company.id %}" {% if uyelik%} {% else %}disabled{% endif %}>
+          <i class='bx bxs-edit' ></i>
+            <span class="links_name">Ayrılan Çalışan</span>
+        </a>
+        <span class="tooltip">Ayrılan Çalışan</span>
+    </li>
+      {% for sube in subes  %}
+      <hr style="color:white">
+      <p style="color:white; text-align:center;">{{sube.sube_adi}}</p>
+      <li style="text-decoration: none;">
+        <a href="{% url 'user:updatesube' sube.id%}">
+          <i class='bx bxs-edit' ></i>
+            <span class="links_name">Şube Düzenle</span>
+        </a>
+        <span class="tooltip">Şube Düzenle</span>
+    </li>
+    <li style="text-decoration: none;">
+      <a href="{% url 'user:calisanregister' sube.id %}">
+        <i class='bx bxs-user-plus' ></i>
+          <span class="links_name">Çalışan Ekle</span>
+      </a>
+      <span class="tooltip">Çalışan Ekle</span>
+  </li>
+  {% endfor %}
+<hr style="color:white">
+<li style="text-decoration: none;">
+  <a href="mailto:?subject=BordroTrik {{company.sirket_adi}} Şirket Davet Kodu &body=Aşağıdaki linkten {{company.sirket_adi}} Şirketini şirketleriniz arasına ekleyebilirsiniz.  http://127.0.0.1:8000/addcompwurl/{{company.sirket_davet_kodu}}">
+    <i class='bx bxs-message-rounded-add'></i>
+      <span class="links_name">M. Müşavir Davet Et</span>
+  </a>
+  <span class="tooltip">M. M. Davet Et</span>
+</li>
+{% endif %}
+<hr style="color:white">
+<li>
+  <div class="profile_content">
+    <div class="profile">
+        <div class="profile_details">
+          {% if request.user|has_group:"admin" %}
+            
+                <i class='bx bxs-crown bx-burst' ></i>
+              {% endif %}
+              {% if request.user|has_group:"mali_musavir" %}
+            <img src="{{user1.mali_musavir_photo.url}}"
+                alt="">
+              {% endif %}
+              {% if request.user|has_group:"muhasebe" %}
+            <img src="{{user1.calisan_photo.url}}"
+                alt="">
+              {% endif %}
+              {% if request.user|has_group:"calisan" %}
+            <img src="{{user1.calisan_photo.url}}"
+                alt="">
+              {% endif %}
+            <div class="name_job">
+              {% if request.user|has_group:"admin" %}
+
+                <div class="name">Admin Account</div>
+                <div class="job">Admin</div>
+
+                {% endif %}
+                {% if request.user|has_group:"mali_musavir" %}
+                <div class="name">{{user1.mali_musavir_adi}} {{user1.mali_musavir_soyadi}}</div>
+                <div class="job">Mali Müşavir</div>
+                   
+                {% endif %}
+                {% if request.user|has_group:"muhasebe" %}
+                <div class="name">{{user1.calisan_adi}} {{user1.calisan_soyadi}}</div>
+                <div class="job">Muhasebe</div>
+                   
+                {% endif %}
+                {% if request.user|has_group:"calisan" %}
+                <div class="name">{{user1.calisan_adi}} {{user1.calisan_soyadi}}</div>
+                <div class="job">Çalışan</div>
+                   
+                {% endif %}
+            </div>
+        </div>
+        <a href="{% url 'user:logout' %}" style="color: inherit;">
+        <i class='bx bx-log-out' id="log_out"></i>
+      </a>
+    </div>
+</div>
+</li>
+  </ul>
+  
+</div>
+
+<script>
+  let btn = document.querySelector("#btn");
+  let sidebar = document.querySelector(".sidebar");
+
+  btn.onclick = function () {
+      sidebar.classList.toggle("active");
+
+  }
+</script>
+
+<div class="home_content">
+  
+
+
+  <nav class="navbar navbar-expand-lg " style="background-color: #11101d; z-index:2;">
+    <div class="container-fluid">
+      {% if request.user.is_authenticated %}
+
+   
+  {% endif %}
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            {% if request.user|has_group:"muhasebe" %}
+        {% if calisantab %}
+        <li class="nav-item">
+          <a class="nav-link" style="color:white" href="{% url 'user:subelist' sirket_id %}">Çalışanlar</a>
+        </li>
+        {% endif %}
+        {% endif %}
+          </li>
+          {% if request.user.is_authenticated %}
+          {% if request.user|has_group:"mali_musavir" %}
+          {% if sirkettab %}
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Ekle
+            </a>
+            <ul class="dropdown-menu">
+              {% if request.user|has_group:"mali_musavir" %}
+            <a class="dropdown-item" href="{% url 'user:companyregister'%}">Şirket Ekle</a>
+            {% endif %}
+              
+            </ul>
+          </li>
+          {% endif %}
+        {% endif %}
+        {% endif %}
+        {% if mainpage %}
+        <li class="nav-item">
+          <a class="nav-link disabled" style="color:white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+            <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+          </svg> : {{ dolar }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" style="color:white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-euro" viewBox="0 0 16 16">
+            <path d="M4 9.42h1.063C5.4 12.323 7.317 14 10.34 14c.622 0 1.167-.068 1.659-.185v-1.3c-.484.119-1.045.17-1.659.17-2.1 0-3.455-1.198-3.775-3.264h4.017v-.928H6.497v-.936c0-.11 0-.219.008-.329h4.078v-.927H6.618c.388-1.898 1.719-2.985 3.723-2.985.614 0 1.175.05 1.659.177V2.194A6.617 6.617 0 0 0 10.341 2c-2.928 0-4.82 1.569-5.244 4.3H4v.928h1.01v1.265H4v.928z"/>
+          </svg>: {{ euro }}</a>
+          
+
+        </li>
+        {% endif %}
+      </ul>
+   
+        
+
+
+        
+          
+      </div>
+    </div>
+  </nav>
+
+
+
+
+  
+      {% endif %}
+{% block content %} {% endblock %}
+
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  {% for message in messages %}
+  <script>
+      
+      swal("{{ message }}");
+      
+  
+  </script>
+  {% endfor %}
+
+
+
+</body>
+</html>

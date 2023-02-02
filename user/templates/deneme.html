@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+<form action = "" method = "post">
+    {% csrf_token %}
+    <div class="row mt-3">
+        <div class="col-1">Ocak</div>
+        <div class="col">
+             Ücret : {{form.month1}}
+        </div>
+        <div class="col"> 
+            Gün Sayısı : {{form.day1}}
+        </div>
+        <div class="col"> 
+            Arge Gün Sayısı : {{form.argegun1}}
+        </div>
+        
+    </div>
+<div class="row mt-3">
+    <div class="col-1">Şubat</div>
+    <div class="col">
+         Ücret : {{form.month2}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day2}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun2}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Mart</div>
+    <div class="col">
+         Ücret : {{form.month3}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day3}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun3}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Nisan</div>
+    <div class="col">
+         Ücret : {{form.month4}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day4}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun4}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Mayıs</div>
+    <div class="col">
+         Ücret : {{form.month5}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day5}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun5}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Haziran</div>
+    <div class="col">
+         Ücret : {{form.month6}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day6}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun6}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Temmuz</div>
+    <div class="col">
+         Ücret : {{form.month7}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day7}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun7}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Ağustos</div>
+    <div class="col">
+         Ücret : {{form.month8}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day8}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun8}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Eylül</div>
+    <div class="col">
+         Ücret : {{form.month9}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day9}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun9}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Ekim</div>
+    <div class="col">
+        Ücret : {{form.month10}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day10}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun10}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Kasım</div>
+    <div class="col">
+         Ücret : {{form.month11}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day11}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun11}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Aralık</div>
+    <div class="col">
+         Ücret : {{form.month12}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day12}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun12}}
+    </div>
+    
+    
+</div>
+
+    <br>
+    <br>
+    5510/5746 İndirimi : {{form.ellibesonindirimi}}
+    <br>
+    Emekli Çalışan : {{form.emeklicalisan}}
+    <br>
+    Hesaplama Türü : {{form.hesaplamaturu}}
+
+    <br>
+    <br>
+    Çalışan Türü : {{form.calisanturu}}
+
+    <br>
+    <br>
+    Eğitim Durumu : {{form.egitimdurumu}}
+
+    <br>
+    <br>
+    Engelli Derecesi : {{form.engelliderecesi}}
+    
+    <input type="submit" value="Submit">
+</form>
+</div>
+
+{% endblock %}
+    

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+    
+    {% block content %}
+
+        <div class="col-md-6 offset-md-3">
+            <h3>Muhasebe Kayıt</h3>
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+                <div class="border rounded p-2 border-secondary"> <h4> Oturum Bilgileriniz</h4> <br>
+                    <input type="text" name="username1" id="username" class="form-control" placeholder="Kullanıcı Adı" hx-post="{% url 'user:checkusername' %}" hx-target="#username-check" hx-trigger="keyup" required>
+                    <div id="username-check"></div>
+                    <br>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    
+    
+      <input type="password" name="password1" id="password1" class="form-control" placeholder="Şifre" required>
+    
+    <br>
+    
+      <input type="password" name="confirm_password1" id="confirm_password1" class="form-control" placeholder="Şifre Doğrulama"required >
+      <span id='message'></span>
+    <br>
+    <script>
+    $('#password1, #confirm_password1').on('keyup', function () {
+        if ($('#password1').val() == $('#confirm_password1').val() && $('#password1').val() != "") {
+          $('#message').html('Doğrulandı').css('color', 'green');
+        } else 
+          $('#message').html('Şifreler Uyuşmuyor').css('color', 'red');
+      });
+    </script>
+                    
+                    </div>
+    <br>
+    <div class="border rounded p-2 border-secondary"> <h4> Şirket Bilgileriniz</h4> <br> {{form3|crispy}}</div>
+
+    <br>
+    <div class="border rounded p-2 border-secondary"> <h4> Çalışan Hakkınızda</h4> <br> {{calisan|crispy}} <br> {{form1|crispy}} <br> {{form2|crispy}} </div>
+
+    <br>
+
+                
+                
+                
+                
+                
+                
+                
+                <br>
+                <button type="submit" class=" btn btn-danger">Kayıt ol</button>
+              
+              
+            </form>
+            <br>
+           
+            
+        </div>
+
+
+
+
+    {% endblock %}

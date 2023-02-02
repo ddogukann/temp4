@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+    
+    {% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3>Çalışan Ekle</h3>
+            <hr>
+            <form method="post" enctype="multipart/form-data">
+
+                {% csrf_token %}
+                <input type="text" name="username1" id="username" class="form-control" placeholder="Kullanıcı Adı" hx-post="{% url 'user:checkusername' %}" hx-target="#username-check" hx-trigger="keyup" required>
+                <div id="username-check"></div>
+                <br>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+  <input type="password" name="password1" id="password1" class="form-control" placeholder="Şifre" required>
+
+<br>
+
+  <input type="password" name="confirm_password1" id="confirm_password1" class="form-control" placeholder="Şifre Doğrulama"required >
+  <span id='message'></span>
+<br>
+<script>
+$('#password1, #confirm_password1').on('keyup', function () {
+    if ($('#password1').val() == $('#confirm_password1').val() && $('#password1').val() != "") {
+      $('#message').html('Doğrulandı').css('color', 'green');
+    } else 
+      $('#message').html('Şifreler Uyuşmuyor').css('color', 'red');
+  });
+</script>
+                {% comment %} {{ form|crispy}} {% endcomment %}
+                {{ calisan|crispy}} 
+                {{ form1|crispy}}
+                {{ form2|crispy}}
+                <br>
+                <button type="submit" class=" btn btn-danger">Ekle</button>
+              
+              
+            </form>
+            <br>
+           
+            
+        </div>
+      </div>
+    
+
+    {% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load has_group %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="col-mb-6 mx-auto">
+
+
+{% if request.user|has_group:"mali_musavir" %}
+<h1>{{ user1.mali_musavir_adi }}</h1>
+{% else %}
+<h1>{{ user1.calisan_adi }} {{user1.calisan_soyadi}}</h1>
+{% endif %}
+
+              
+</div>
+    
+
+
+{% endblock %}

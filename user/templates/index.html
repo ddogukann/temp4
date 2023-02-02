@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+    
+    {% block content %}
+    {% for i in aylar %}
+    <div class="container mt-5">
+    <form action="add" method="POST">
+        {% csrf_token %}
+ 
+   
+   
+  <div class="row">
+  <div class="col-1">
+    {{i}}
+  </div>
+ 
+  <div class="col">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Brüt Ücret</label>
+    <input type="text" class="form-control" name="brut" id="exampleInputEmail1"  aria-describedby="emailHelp" placeholder="Brüt Ücret Giriniz">
+    
+  </div>
+</div>
+
+<div class="col">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Gün Sayısı</label>
+    <input type="text" class="form-control" name="gun" id="exampleInputPassword1" placeholder="Gün Sayısı">
+  </div>
+</div>
+{% endfor %}
+<div class="row">
+<div class="col">
+  <div class="form-group form-check">
+    <input type="checkbox" name="checkbox1" class="form-check-input" id="exampleCheck1" >
+    <label class="form-check-label" for="exampleCheck1">5510 İndirimi</label>
+  </div>
+</div>
+  <button type="submit" class="btn btn-primary">Listele</button>
+</form>
+</div>
+
+
+
+    {% endblock %}
+    

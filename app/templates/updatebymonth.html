@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+    
+    {% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3>Maas</h3>
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+                {% if maastutar1 %}
+                {{ form.maas_tutari1|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari1.as_hidden }}
+                {% endif %}
+                {% if maastutar2 %}
+                {{ form.maas_tutari2|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari2.as_hidden }}
+                {% endif %}
+                {% if maastutar3 %}
+                {{ form.maas_tutari3|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari3.as_hidden }}
+                {% endif %}
+                {% if maastutar4 %}
+                {{ form.maas_tutari4|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari4.as_hidden }}
+                {% endif %}
+                {% if maastutar5 %}
+                {{ form.maas_tutari5|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari5.as_hidden }}
+                {% endif %}
+                {% if maastutar6 %}
+                {{ form.maas_tutari6|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari6.as_hidden }}
+                {% endif %}
+                {% if maastutar7 %}
+                {{ form.maas_tutari7|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari7.as_hidden }}
+                {% endif %}
+                {% if maastutar8 %}
+                {{ form.maas_tutari8|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari8.as_hidden }}
+                {% endif %}
+                {% if maastutar9 %}
+                {{ form.maas_tutari9|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari9.as_hidden }}
+                {% endif %}
+                {% if maastutar10 %}
+                {{ form.maas_tutari10|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari10.as_hidden }}
+                {% endif %}
+                {% if maastutar11 %}
+                {{ form.maas_tutari11|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari11.as_hidden }}
+                {% endif %}
+                {% if maastutar12 %}
+                {{ form.maas_tutari12|as_crispy_field }}
+                {{ form.gunsayisi1|as_crispy_field }}
+                {{ form.argegun1|as_crispy_field }}
+                {% else %}
+                {{ form.maas_tutari12.as_hidden }}
+                {% endif %}
+                 
+                {{ form.para_birimi.as_hidden }}
+                
+
+                
+                
+                <br>
+                <button type="submit" class=" btn btn-danger">Düzenle</button>
+              
+              
+            </form>
+            <br>
+           
+            
+        </div>
+      </div>
+    
+
+    {% endblock %}

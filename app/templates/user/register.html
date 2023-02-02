@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+    {% block content %}
+
+
+        <div class="col-md-6 offset-md-3">
+            <h3>Kayıt Ol</h3>
+            <hr>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="border rounded p-2 border-secondary"> <h4> Oturum Bilgileriniz</h4> <br> {{form|crispy}}</div>
+    <br>
+    <div class="border rounded p-2 border-secondary"> <h4> Şirket Bilgileriniz</h4> <br> {{form5|crispy}}</div>
+    <br>
+    <div class="border rounded p-2 border-secondary"> <h4> Sizin Hakkınızda</h4> <br> {{form4|crispy}} <br> {{form2|crispy}} <br> {{form3|crispy}}</div>
+    
+
+
+    
+    <br>
+    <button type="submit" class="btn btn-danger">Kayıt ol</button>
+    <br>
+    <br>
+    <br>
+</form>
+        </div>
+
+    {% endblock %}

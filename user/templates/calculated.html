@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+    
+    {% block content %}
+
+<style>
+  p{
+    font-size: 11px;
+    font-weight: bold;
+  }
+  table{
+    height:100%;width:100%; position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+  }
+
+ 
+</style>
+
+<div class="table-responsive">
+<table  class="table table-bordered table-dark  table-sm table-striped m-10px">
+  <thead>
+    <tr>
+      <th scope="col"><p> Aylar</p></th>
+      <th scope="col"><p>Brüt Ücret</p></th>
+      <th scope="col"><p>Çalışılan Gün</p></th>
+      <th scope="col"><p>Bordroya Esas Brüt Ücret</p></th>
+      <th scope="col"><p>Sgk Matrahı</p></th>
+      <th scope="col"><p style="color:red">SGK Kesintisi</p></th>
+      <th scope="col"><p style="color:red">İşsizlik Kesintisi</p></th>
+      <th scope="col"><p>Vergi Dilimi</p></th>
+      <th scope="col"><p>İstisna Öncesi Gelir Vergisi</p></th>
+      <th scope="col"><p>İstisna Öncesi Damga Vergisi</p></th>
+      <th scope="col"><p>Vergi Matrahı</p></th>
+      <th scope="col"><p>Kumulatif Vergi Matrahi</p></th>
+      <th scope="col"><p>İstisna Öncesi Gelir Vergisi</p></th>
+      <th scope="col"><p>Asgari Vergi Matrah</p></th>
+      <th scope="col"><p>Kumulatif Asgari Ücret</p></th>
+      <th scope="col"><p style="color:#12B9D6">Asgari Gelir Vergisi İstisnasi</p></th>
+      <th scope="col"><p style="color:#12B9D6">Asgari Damga Vergisi İstisnasi</p></th>
+      <th scope="col"><p style="color:red">Damga Vergisi</p></th>
+      <th scope="col"><p style="color:red">Gelir Vergisi</p></th>
+      <th scope="col"><p>Net Ücret</p></th>
+      <th scope="col"><p style="color:teal">İşveren SGK Kesintisi</p></th>
+      <th scope="col"><p style="color:teal">İşveren İşsizlik Kesintisi</p></th>
+      <th scope="col"><p>Toplam Sgk</p></th>
+      <th scope="col"><p style="color:teal">Toplam Maliyet</p></th>
+      <th scope="col"><p>Sgk İstisnası</p></th>
+      <th scope="col"><p style="color:orange">Ödenecek SGK</p></th>
+      <th scope="col"><p style="color:orange">Ödenecek Gelir</p></th>
+      <th scope="col"><p style="color:orange">Ödenecek Damga Vergisi</p></th>
+      
+    </tr>
+  </thead>
+  <tbody>
+
+
+ {% for maas in maaslar %}
+ <tr>
+
+
+      <td><p>{{ maas.0 }}</p></td>
+      <td><p>{{ maas.19 }}</p></td>
+      <td><p>{{maas.2}}</p></td>
+      <td><p>{{maas.1}}</p></td>
+      <td><p>{{maas.3}}</p></td>
+      <td><p style="color:red">{{maas.4}}</p></td>
+      <td><p style="color:red">{{maas.5}}</p></td>
+      <td><p>{{maas.25}}</p></td>
+      <td><p>{{maas.24}}</p></td>
+      <td><p>{{maas.26}}</p></td>
+      <td><p>{{maas.6}}</p></td>
+      <td><p>{{ maas.7 }}</p></td>
+      <td><p>{{ maas.8 }}</p></td>
+      <td><p>{{ maas.9 }}</p></td>
+      <td><p>{{ maas.10 }}</p></td>
+      <td><p style="color:#12B9D6">{{ maas.11 }}</p></td>
+      <td><p style="color:#12B9D6">{{ maas.27 }}</p></td>
+      <td><p style="color:red">{{maas.12}}</p></td>
+      <td><p style="color:red">{{maas.13}}</p></td>
+      <td><p>{{ maas.14 }}</p></td>
+      <td><p style="color:teal">{{maas.15}}</p></td>
+      <td><p style="color:teal">{{maas.16}}</p></td>
+      <td><p>{{ maas.17 }}</p></td>
+      <td><p style="color:teal">{{maas.18}}</p></td>
+      <td><p>{{ maas.20 }}</p></td>
+      <td><p style="color:orange">{{maas.21}}</p></td>
+      <td><p style="color:orange">{{maas.22}}</p></td>
+      <td><p style="color:orange">{{maas.23}}</p></td>
+
+     
+     
+
+ 
+    </tr>
+     {% endfor %}
+   
+  </tbody>
+</table>
+</div>
+
+
+    {% endblock %}

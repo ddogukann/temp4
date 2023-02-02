@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+    
+    {% block content %}
+    
+
+{{company.sirket_adi}}
+
+
+<button type="button" class="btn btn-danger"><a href="/companys/{{company.id}}/addemp">Ekle</a></button>
+<button type="button" class="btn btn-danger"><a href="/companys/{{company.id}}/listemp">listele</a></button>
+
+
+  {% endblock %}

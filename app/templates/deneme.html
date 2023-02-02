@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container mt-5">
+<form action = "" method = "post">
+    {% csrf_token %}
+    <div class="row mt-3">
+        <div class="col-1">Ocak</div>
+        <div class="col">
+             Ücret : {{form.month1|as_crispy_field}}
+        </div>
+        <div class="col"> 
+            Gün Sayısı : {{form.day1|as_crispy_field}}
+        </div>
+        <div class="col"> 
+            Arge Gün Sayısı : {{form.argegun1|as_crispy_field}}
+        </div>
+        
+    </div>
+<div class="row mt-3">
+    <div class="col-1">Şubat</div>
+    <div class="col">
+         Ücret : {{form.month2|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day2|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun2|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Mart</div>
+    <div class="col">
+         Ücret : {{form.month3|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day3|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun3|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Nisan</div>
+    <div class="col">
+         Ücret : {{form.month4|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day4|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun4|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Mayıs</div>
+    <div class="col">
+         Ücret : {{form.month5|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day5|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun5|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Haziran</div>
+    <div class="col">
+         Ücret : {{form.month6|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day6|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun6|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Temmuz</div>
+    <div class="col">
+         Ücret : {{form.month7|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day7|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun7|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Ağustos</div>
+    <div class="col">
+         Ücret : {{form.month8|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day8|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun8|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Eylül</div>
+    <div class="col">
+         Ücret : {{form.month9|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day9|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun9|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Ekim</div>
+    <div class="col">
+        Ücret : {{form.month10|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day10|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun10|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Kasım</div>
+    <div class="col">
+         Ücret : {{form.month11|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day11|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun11|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col-1">Aralık</div>
+    <div class="col">
+         Ücret : {{form.month12|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Gün Sayısı : {{form.day12|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Arge Gün Sayısı : {{form.argegun12|as_crispy_field}}
+    </div>
+    
+    
+</div>
+<div class="row mt-3">
+    <div class="col">5510/5746 İndirimi :</div>
+    <div class="col">
+        {{form.ellibesonindirimi|as_crispy_field}}
+    </div>
+    <div class="col"> 
+        Emekli Çalışan :</div>
+    <div class="col">
+         {{form.emeklicalisan|as_crispy_field}}
+    </div>
+</div>
+    
+    
+    
+
+    Hesaplama Türü : {{form.hesaplamaturu|as_crispy_field}}
+
+    
+    Çalışan Türü : {{form.calisanturu|as_crispy_field}}
+
+    
+    Eğitim Durumu : {{form.egitimdurumu|as_crispy_field}}
+
+    Engelli Derecesi : {{form.engelliderecesi|as_crispy_field}}
+
+    Hesaplama Yılı : {{form.hesaplamayili|as_crispy_field}}
+
+    Para Birimi : {{form.parabirimi|as_crispy_field}}
+    
+    {% comment %} <input type="submit" value="Submit"> {% endcomment %}
+    <button type="submit" class="btn btn-primary">Hesapla</button>
+    <br>
+    <br>    
+</form>
+</div>
+
+{% endblock %}
+    
